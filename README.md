@@ -170,6 +170,35 @@ Before upgrading you need to grant the `PROCESS` privilege to the xtrabackup use
 
     mysql> GRANT PROCESS ON *.* TO 'xtrabackup'@'localhost';
 
+## Running Tests
+
+The `test.sh` script is a simple script that starts the seed and node containers using `docker run`. It starts the seed
+in the background, outputs the seed logs to the console, then starts a node in the foreground. Success of the test
+should be determined by inspecting the logs and additional actions like starting additional nodes and killing one or more
+nodes should be performed to verify that recovery works as expected.
+
+**Example**
+
+Build the image for 10.4 and start a single seed and node:
+
+```
+$ docker build . -f Dockerfile-10.4 -t galera-test-10.4
+$ ./test.sh galera-test-10.4
+```
+
+In another console, verify the cluster status and size:
+
+```
+$ docker exec -it cm-galera-test-node mysql -be "show status like 'wsrep_cluster_s%';"
++----------------------------+--------------------------------------+
+| Variable_name              | Value                                |
++----------------------------+--------------------------------------+
+| wsrep_cluster_size         | 2                                    |
+| wsrep_cluster_state_uuid   | e54090dc-f892-11ec-ad6f-f2704a681293 |
+| wsrep_cluster_status       | Primary                              |
++----------------------------+--------------------------------------+
+```
+
 # More Info
 
  - Tries to handle as many recovery scenarios as possible including full cluster ungraceful shutdown by
