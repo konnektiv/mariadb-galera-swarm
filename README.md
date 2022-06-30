@@ -179,7 +179,11 @@ nodes should be performed to verify that recovery works as expected.
 
 **Example**
 
-Build the image for 10.4 and start a single seed and node:
+```
+make test-10.4
+```
+
+Or build and run your own image for 10.4 and start a single seed and node:
 
 ```
 $ docker build . -f Dockerfile-10.4 -t galera-test-10.4
