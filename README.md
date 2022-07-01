@@ -30,9 +30,13 @@ endpoints for varying degress of healthiness to aid with integration of load bal
 
 Please submit more examples for Mesos, etc. and also improvements for existing examples!
 
+By using DNS resolution to discover other nodes, they don't have to be specified explicitly so this container
+should work with any system with DNS-based service discovery such as Kubernetes, Docker Swarm, Consul, etc.
+
 ## Commands
 
-The entrypoint takes as a command one of the following startup "modes":
+The entrypoint takes as a command one of the following startup "modes". Additional arguments will be passed to the `mysqld`
+command line. For example, you will typically want to add `--log-bin=mysqld-bin` to enable binary logging.
 
 ### seed
 
@@ -74,8 +78,10 @@ And now start your Galera container back up with the new root password.
 Start the container but not the server. Runs "sleep infinity". Useful just to get volumes
 initialized or if you want to `docker exec` without the server running.
 
-By using DNS resolution to discover other nodes they don't have to be specified explicitly. This should work
-with any system with DNS-based service discovery such as Kontena, Docker Swarm Mode, Consul, etc.
+### bash
+
+Open a bash shell instead of starting the container. For example `bash -c 'touch /var/lib/mysql/new-cluster'` to touch the
+flag file that indicates to start a new cluster on the next startup.
 
 ## Environment Variables
 
