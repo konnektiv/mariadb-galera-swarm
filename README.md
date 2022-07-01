@@ -212,7 +212,7 @@ $ docker exec -it cm-galera-test-node mysql -be "show status like 'wsrep_cluster
 # More Info
 
  - Tries to handle as many recovery scenarios as possible including full cluster ungraceful shutdown by
-   using --wsrep-recovery and inter-node communication to discover the optimal node for bootstrapping
+   using `--wsrep-recovery` and inter-node communication to discover the optimal node for bootstrapping
    a new cluster when the old one cannot be recovered.
  - If you need to perform manual recovery of a previously healthy cluster you can use "node" mode
    but touch a file at `/var/lib/mysql/new-cluster` to force a node to bootstrap a new cluster
@@ -234,11 +234,12 @@ $ docker exec -it cm-galera-test-node mysql -be "show status like 'wsrep_cluster
     - Some nodes may finish pulling container images from remote repositories sooner than others
     - Schedulers may not be launching nodes quickly enough
     - Service discovery systems may be slow to propagate updates via DNS
- - If the file `/usr/local/lib/startup.sh` exists it will be sourced in the start.sh script.
+ - If the file `/usr/local/lib/startup.sh` exists it will be sourced in the `start.sh` script allowing you to perform
+   initialization tasks if needed.
  - If you need to promote a running node to be a new "Primary Component" you can run the following command to do so:
-       $ docker exec -i <container> mysql -p /primary-component.sql
+    - `docker exec -i <container> mysql -p /primary-component.sql`
  - You can monitor cluster state changes more clearly by setting `wsrep_notify_cmd` to `/usr/local/bin/notify.sh`
-   which will output the updates to the Docker logs/console.
+   which will output the updates to the Docker logs/console or use your own command to report to your monitoring systems.
 
 # Credit
 
