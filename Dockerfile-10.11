@@ -1,4 +1,4 @@
-FROM mariadb:10.11-rc
+FROM mariadb:10.11
 
 # Download blocked from http://www.quicklz.com/qpress-11-linux-x64.tar
 COPY bin/qpress-11-linux-x64.tar /tmp/qpress.tar
