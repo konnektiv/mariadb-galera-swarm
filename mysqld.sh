@@ -11,7 +11,7 @@ HEAD_START=15
 function do_install_db {
 	if ! test -d /var/lib/mysql/mysql; then
 		echo "${LOG_MESSAGE} Initializing MariaDb data directory..."
-		if ! mysql_install_db --rpm; then
+		if ! mariadb-install-db --rpm; then
 			echo "${LOG_MESSAGE} Failed to initialize data directory."
 			exit 1
 		fi
@@ -134,7 +134,7 @@ else
 		rm -f $tmpfile
 	fi
 
-	NODE_ADDRESS=$(<<<$OPT sed -E 's#.*--wsrep_node_address=([0-9\.]+):4567.*#\1#')
+	NODE_ADDRESS=$(<<<$OPT sed -E 's#.*--wsrep_node_address=([0-9\.:]+)#\1#')
 	GCOMM=$(<<<$OPT sed -E 's#.*gcomm://([0-9\.,]+)\s+.*#\1#')
 
 	if [[ -z $POSITION ]]

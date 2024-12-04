@@ -186,24 +186,24 @@ nodes should be performed to verify that recovery works as expected.
 **Example**
 
 ```
-make test-10.4
+make test-10.11
 ```
 
-Or build and run your own image for 10.4 and start a single seed and node:
+Or build and run your own image for 10.11 and start a single seed and node:
 
 ```
-$ docker build . -f Dockerfile-10.4 -t galera-test-10.4
-$ ./test.sh galera-test-10.4
+$ docker build . -f Dockerfile-10.11 -t galera-test-10.11
+$ ./test.sh galera-test-10.11
 ```
 
 In another console, verify the cluster status and size:
 
 ```
-$ docker exec -it cm-galera-test-node mysql -be "show status like 'wsrep_cluster_s%';"
+$ docker exec -it cm-galera-test-node1 mysql -be "show status like 'wsrep_cluster_s%';"
 +----------------------------+--------------------------------------+
 | Variable_name              | Value                                |
 +----------------------------+--------------------------------------+
-| wsrep_cluster_size         | 2                                    |
+| wsrep_cluster_size         | 3                                    |
 | wsrep_cluster_state_uuid   | e54090dc-f892-11ec-ad6f-f2704a681293 |
 | wsrep_cluster_status       | Primary                              |
 +----------------------------+--------------------------------------+

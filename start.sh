@@ -423,8 +423,8 @@ fi
 gosu mysql mysqld.sh --console \
 	$MYSQL_MODE_ARGS \
 	--wsrep_cluster_name=$CLUSTER_NAME \
-	--wsrep_cluster_address=gcomm://$GCOMM \
-	--wsrep_node_address=$NODE_ADDRESS:4567 \
+	--wsrep_cluster_address=gcomm://${GCOMM%,} \
+	--wsrep_node_address=$NODE_ADDRESS \
 	--default-time-zone=$DEFAULT_TIME_ZONE \
 	"$@" 2>&1 &
 
