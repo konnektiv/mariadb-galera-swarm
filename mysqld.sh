@@ -134,7 +134,7 @@ else
 		rm -f $tmpfile
 	fi
 
-	NODE_ADDRESS=$(<<<$OPT sed -E 's#.*--wsrep_node_address=([0-9\.:]+)#\1#')
+	NODE_ADDRESS=$(<<<$OPT sed -E 's#.*--wsrep_node_address=([0-9\.:]+).*#\1#')
 	GCOMM=$(<<<$OPT sed -E 's#.*gcomm://([0-9\.,]+)\s+.*#\1#')
 
 	if [[ -z $POSITION ]]
