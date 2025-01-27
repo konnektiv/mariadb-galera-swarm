@@ -9,7 +9,6 @@ RUN set -x \
       curl \
       netcat \
       pigz \
-      pv \
     && tar -C /usr/local/bin -xf /tmp/qpress.tar qpress \
     && chmod +x /usr/local/bin/qpress \
     && rm -rf /tmp/* /var/cache/apk/* /var/lib/apt/lists/*
