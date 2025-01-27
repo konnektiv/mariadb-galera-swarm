@@ -1,16 +1,11 @@
-FROM mariadb:10.6
-
-# Download blocked from http://www.quicklz.com/qpress-11-linux-x64.tar
-COPY bin/qpress-11-linux-x64.tar /tmp/qpress.tar
+FROM mariadb:11.4
 
 RUN set -x \
     && apt-get update \
     && apt-get install -y --no-install-recommends --no-install-suggests \
       curl \
-      netcat \
+      netcat-traditional \
       pigz \
-    && tar -C /usr/local/bin -xf /tmp/qpress.tar qpress \
-    && chmod +x /usr/local/bin/qpress \
     && rm -rf /tmp/* /var/cache/apk/* /var/lib/apt/lists/*
 
 COPY conf.d/*                /etc/mysql/conf.d/
@@ -24,8 +19,9 @@ RUN set -ex ;\
     chmod -R go-w /etc/mysql ;\
     # Remove auth_socket config - already enabled in 10.4 by default
     rm /etc/mysql/conf.d/31-auth-socket.cnf ;\
-    # Disable code that deletes progress file after SST
-    sed -i 's#-p \$progress#-p \$progress-XXX#' /usr/bin/wsrep_sst_mariabackup
+    # Remove options that are no longer supported
+    sed -i '/innodb_lock_schedule_algorithm/d' /etc/mysql/conf.d/30-galera.cnf ;
+    
 
 EXPOSE 3306 4444 4567 4567/udp 4568 8080 8081
 

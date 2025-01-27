@@ -17,7 +17,7 @@ replication functionality when building new versions using the `test.sh` script!
 
 This is not a simple config update, much effort has gone into making this container automate the initialization
 and *recovery* of a cluster. The entrypoint script orchestrates full recovery on simultaneous reset by having
-nodes communicate with each other *before* starting the mysqld process to ensure that the cluster is recovered correctly.
+nodes communicate with each other *before* starting the mariadbd process to ensure that the cluster is recovered correctly.
 It does this by examining Galera's state files, recovering the GTID position on all nodes and then communicating this
 between nodes to find the most up-to-date one to form a new cluster if needed. It also provides multiple healthcheck
 endpoints for varying degress of healthiness to aid with integration of load balancers and scheduling systems.
@@ -35,7 +35,7 @@ should work with any system with DNS-based service discovery such as Kubernetes,
 
 ## Commands
 
-The entrypoint takes as a command one of the following startup "modes". Additional arguments will be passed to the `mysqld`
+The entrypoint takes as a command one of the following startup "modes". Additional arguments will be passed to the `mariadbd`
 command line. For example, you will typically want to add `--log-bin=mysqld-bin` to enable binary logging.
 
 ### seed

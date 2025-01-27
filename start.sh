@@ -12,7 +12,7 @@ function shutdown () {
 	echo "Received TERM|INT signal."
 	if [[ -f /var/run/mysqld/mysqld.pid ]] && [[ -n $SYSTEM_PASSWORD ]]; then
 		echo "Shutting down..."
-		mysql -u system -h 127.0.0.1 -p$SYSTEM_PASSWORD -e 'SHUTDOWN'
+		mariadb -u system -h 127.0.0.1 -p$SYSTEM_PASSWORD -e 'SHUTDOWN'
 		# Since this is docker, expect that if we don't shut down quickly enough we will get killed anyway
 	else
 		exit
@@ -81,7 +81,7 @@ case "$1" in
 		fi
 
 		set +e -m
-		gosu mysql mysqld --console \
+		gosu mysql mariadbd --console \
 			--wsrep-on=OFF \
 			--default-time-zone=$DEFAULT_TIME_ZONE \
 			"$@" 2>&1 &
@@ -388,7 +388,7 @@ esac
 set +e -m
 
 # Allow external processes to write to docker logs (wsrep_notify_cmd)
-# Place it in a directory that is not writeable by mysql to prevent SST script from deleting it
+# Place it in a directory that is not writeable by mariadb to prevent SST script from deleting it
 fifo=/tmp/mysql-console/fifo
 rm -rf $(dirname $fifo) \
   && mkdir -p $(dirname $fifo) \

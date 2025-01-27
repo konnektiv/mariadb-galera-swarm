@@ -1,16 +1,16 @@
 DATE=$(shell date +%Y-%m-%d)
 VERSION_10_5=10.5.27
-VERSION_10_6=10.6.20
 VERSION_10_11=10.11.10
+VERSION_11_4=11.4.4
 
 all: build
 
-build: build-10.5 build-10.6 build-10.11
-push: push-10.5 push-10.6 push-10.11
+build: build-10.5 build-10.11 build-11.4
+push: push-10.5 push-10.11 push-11.4
 
 10.5: build-10.5 push-10.5
-10.6: build-10.6 push-10.6
 10.11: build-10.11 push-10.11
+11.4: build-11.4 push-11.4
 
 
 build-10.5:
@@ -20,13 +20,6 @@ test-10.5:
 push-10.5:
 	docker push colinmollenhour/mariadb-galera-swarm:$(VERSION_10_5)-$(DATE)
 
-build-10.6:
-	docker build --pull -f Dockerfile-10.6 . -t colinmollenhour/mariadb-galera-swarm:$(VERSION_10_6)-$(DATE)
-test-10.6:
-	./test.sh colinmollenhour/mariadb-galera-swarm:$(VERSION_10_6)-$(DATE)
-push-10.6:
-	docker push colinmollenhour/mariadb-galera-swarm:$(VERSION_10_6)-$(DATE)
-
 build-10.11:
 	docker build --pull -f Dockerfile-10.11 . -t colinmollenhour/mariadb-galera-swarm:$(VERSION_10_11)-$(DATE)
 test-10.11:
@@ -34,3 +27,9 @@ test-10.11:
 push-10.11:
 	docker push colinmollenhour/mariadb-galera-swarm:$(VERSION_10_11)-$(DATE)
 
+build-11.4:
+	docker build --pull -f Dockerfile-11.4 . -t colinmollenhour/mariadb-galera-swarm:$(VERSION_11_4)-$(DATE)
+test-11.4:
+	./test.sh colinmollenhour/mariadb-galera-swarm:$(VERSION_11_4)-$(DATE)
+push-11.4:
+	docker push colinmollenhour/mariadb-galera-swarm:$(VERSION_11_4)-$(DATE)

@@ -8,7 +8,7 @@ while true; do
 	sleep 10
 done
 
-version=$(mysql -sNe "SELECT VERSION();")
+version=$(mariadb -sNe "SELECT VERSION();")
 if [[ -z $version ]]; then
 	echo "$0: _-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^_"
 	echo "$0: = Could not login as root to determine MySQL version and run upgrades! ="
@@ -26,15 +26,15 @@ if [[ -z $old_version ]]; then
 	echo -e "# Created by $0 on $(date)\n# DO NOT DELETE THIS FILE\n$version" > $FLAG
 
 	# Special case for 10.1 users upgrading to 10.2
-	if ! mysql -sNe "SHOW GRANTS FOR 'xtrabackup'@'localhost';" | grep -qF PROCESS; then
+	if ! mariadb -sNe "SHOW GRANTS FOR 'xtrabackup'@'localhost';" | grep -qF PROCESS; then
 		echo "$0: Granting PROCESS to xtrabackup user for old version."
-		mysql -e "GRANT PROCESS ON *.* TO 'xtrabackup'@'localhost'; FLUSH PRIVILEGES;"
+		mariadb -e "GRANT PROCESS ON *.* TO 'xtrabackup'@'localhost'; FLUSH PRIVILEGES;"
 	fi
 fi
 
 if [[ -n $old_version ]] && [[ $version != $old_version ]]; then
 	echo -e "# Created by $0 on $(date)\n# DO NOT DELETE THIS FILE\n$version" > $FLAG
 	echo "$0: Detected old version ($old_version -> $version)"
-	echo "$0: Running mysql_upgrade..."
-	mysql_upgrade
+	echo "$0: Running mariadb-upgrade..."
+	mariadb-upgrade
 fi
