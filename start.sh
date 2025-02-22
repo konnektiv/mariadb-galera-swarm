@@ -323,19 +323,7 @@ case $START_MODE in
 					GCOMM+="$SEP$ADDR"
 				else
 					RESOLVE=1
-					if [[ $ADDR =~ "_" ]]; then
-						if [ ! -n $LOG_OUT_HOSTNAMES ]; then
-							LOG_OUT_HOSTNAMES=1
-							echo "Underscore in container name detected - trying predictable hostnames"
-						fi
-						IPS=""
-						for TASK_ID in {1..10}; do
-							HOSTNAME="$ADDR.$TASK_ID"
-							GCOMM+="$SEP$(getent hosts "$HOSTNAME" | awk '{ print $1 }' | paste -sd ","),"
-						done
-					else
-						GCOMM+="$SEP$(getent hosts "$ADDR" | awk '{ print $1 }' | paste -sd ",")"
-					fi
+					GCOMM+="$SEP$(getent hosts "$ADDR" | awk '{ print $1 }' | paste -sd ",")"
 				fi
 				if [ -n "$GCOMM" ]; then
 					SEP=,
