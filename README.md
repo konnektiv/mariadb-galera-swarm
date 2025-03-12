@@ -111,7 +111,7 @@ Additional variables for "seed":
 
 Additional variables for "node":
 
- - `GCOMM_MINIMUM` (optional - defaults to 2)
+ - `GCOMM_MINIMUM` (optional - defaults to 2) - Set this to the minimum number of nodes required to start the cluster without waiting. For example, use `GCOMM_MINIMUM=3` for a 3-node cluster.
 
 ### Providing secrets through files
 
