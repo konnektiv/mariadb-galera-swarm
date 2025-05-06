@@ -1,7 +1,7 @@
 DATE=$(shell date +%Y-%m-%d)
 VERSION_10_5=10.5.27
 VERSION_10_11=10.11.10
-VERSION_11_4=11.4.4
+VERSION_11_4=11.4.5
 
 all: build
 
