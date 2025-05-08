@@ -2,7 +2,7 @@ DATE=$(shell date +%Y-%m-%d)
 VERSION_10_5=10.5.27
 VERSION_10_11=10.11.10
 VERSION_11_7=11.7.2
-MAINTAINER=colinmollenhour
+MAINTAINER=konnektiv
 
 all: build
 
