@@ -1,7 +1,7 @@
 DATE=$(shell date +%Y-%m-%d)
 VERSION_10_5=10.5.27
 VERSION_10_11=10.11.10
-VERSION_11_8=11.8.2
+VERSION_11_8=11.8.3
 MAINTAINER=konnektiv
 
 all: build
