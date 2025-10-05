@@ -136,6 +136,10 @@ else
 
 	NODE_ADDRESS=$(<<<$OPT sed -E 's#.*--wsrep_node_address=([0-9\.:]+).*#\1#')
 	GCOMM=$(<<<$OPT sed -E 's#.*gcomm://([0-9\.,]+)\s+.*#\1#')
+	if [ "$GCOMM" = "$OPT" ]; then
+		echo "No valid GCOMM cluster address found."
+		GCOMM=""
+	fi
 
 	if [[ -z $POSITION ]]
 	then
